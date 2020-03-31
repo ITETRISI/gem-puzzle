@@ -1,0 +1,13 @@
+.puzzle {
+	display: grid;
+	grid-template-columns: repeat(,40px);
+}
+
+.puzzle > span {
+	display: block;
+	width: 40px;
+	height: 40px;
+	border: 1px solid black;
+	line-height: 40px;
+	text-align: center;
+}
