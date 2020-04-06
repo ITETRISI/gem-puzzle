@@ -1,12 +1,161 @@
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-color: #fcf8e8;
+}
+
+.wrapper {
+	position: relative;
+	margin: 0 auto;
+}
+
+
+.info_container {
+	display: flex;
+	justify-content: space-around;
+	color: #726e63;
+	font-family: 'Oswald', sans-serif;
+	font-weight: 700;
+	font-size: 20px;
+	margin: 5px;
+}
+
+.info_container>span {
+	width: 100px;
+}
+
+.btn__container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+button {
+	background-color: #bbada0;
+	height: 40px;
+	margin: 5px;
+	outline: none;
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+	color: #fff;
+	font-family: 'Oswald', sans-serif;
+	font-weight: 700;
+	font-size: 20px;
+	transition: 1s;
+}
+
+button:hover {
+	background-color: #87755dda;
+	color: #fff;
+}
+
+.puzzle__size {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.puzzle__size>button {
+	height: 30px;
+	font-size: 17px;
+}
+
+.congratulation {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	text-align: center;
+	line-height: 80px;
+	width: 200px;
+	height: 80px;
+	background-color: #bbada0;
+	border-radius: 5px;
+	font-family: 'Oswald', sans-serif;
+	font-weight: 700;
+	font-size: 23px;
+	color: #fff;
+	display: none;
+}
+
+.result {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	padding: 20px 0;
+	width: 250px;
+	height: 300px;
+	background-color: #bbada0;
+	border-radius: 5px;
+	font-family: 'Oswald', sans-serif;
+	font-weight: 700;
+	color: #fff;
+	display: none;
+	align-items: center;
+	flex-direction: column;
+}
+
+.puzzle {
+	display: flex;
+	width: 560px;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
 .puzzle__row {
 	display: flex;
 }
 
-.puzzle__row > span {
-	display: block;
-	width: 40px;
-	height: 40px;
-	border: 1px solid black;
-	line-height: 40px;
+.puzzle__row>div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 60px;
+	height: 60px;
+	margin: 5px;
 	text-align: center;
+	background-color: #df7861;
+	font-family: 'Oswald', sans-serif;
+	font-weight: 700;
+	font-size: 25px;
+	color: #fff;
+	border-radius: 5px;
+	transition: 0.3s;
+}
+
+#gem-0 {
+	background-color: #ecb390;
+	color: #ecb390;
+
+}
+
+.left {
+	transform: translateX(-70px);
+}
+
+.right {
+	transform: translateX(70px);
+}
+
+.up {
+	transform: translateY(-70px);
+}
+
+.down {
+	transform: translateY(70px);
+}
+
+.drag {
+	opacity: 0.7;
+}
+
+.drop {
+	transform: scale(1.1);
 }

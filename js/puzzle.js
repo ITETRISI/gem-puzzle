@@ -1,40 +1,72 @@
-class Puzzle {
-	static puzzleSize = 5;
+import Info from './game_info.js';
+
+export default class Puzzle {
+	static puzzleSize = 4;
+
+	static puzzleArray;
+
+	static finalArray;
+
+	static results = []
 
 	static createPuzzle() {
-		let array = new Array(this.puzzleSize**2).fill(1).map((a,i) => i).sort((a, b) => 0.5 - Math.random())
-		let puzzle = []
-		for(let i = 0; i < this.puzzleSize; i++){
-			puzzle.push(new Array(this.puzzleSize))
-			for(let j = 0; j < this.puzzleSize; j++){
-				puzzle[i][j] = array[j+this.puzzleSize*i]
+		if (sessionStorage.getItem('puzzleArray')) {
+			this.puzzleArray = JSON.parse(sessionStorage.getItem('puzzleArray'));
+			this.puzzleSize = sessionStorage.getItem('puzzleSize');
+			this.finalArray = JSON.parse(sessionStorage.getItem('finalArray'));
+			Info.seconds = sessionStorage.getItem('seconds');
+			this.results = JSON.parse(sessionStorage.getItem('results'));
+			if (this.results) {
+				this.results.map(() => this.saveResult());
 			}
+			Info.steps = sessionStorage.getItem('steps') - 1;
+			Info.createTimer();
+			Info.countOfSteps();
+			this.drawPuzzle();
+		} else {
+			this.newPuzzle();
 		}
-		this.drawPuzzle(puzzle);
 	}
 
-	static drawPuzzle(puzzle) {
-		puzzle.forEach((row,i) => {
-			document.querySelector('.puzzle').innerHTML += `<div class="puzzle__row"></div>`
-			row.forEach( gem => {
-				document.querySelector(`.puzzle`).lastChild.innerHTML += `<span>${gem}</span>`
-			})
-		})
+	static newPuzzle() {
+		this.puzzleArray = new Array(this.puzzleSize ** 2)
+			.fill(1).map((a, i) => i)
+			.sort(() => 0.5 - Math.random());
+		this.finalArray = new Array(this.puzzleSize ** 2).fill(1).map((a, i) => i);
+		this.finalArray.push(this.finalArray.shift());
+		sessionStorage.setItem('finalArray', JSON.stringify(this.finalArray));
+		sessionStorage.setItem('originalArray', JSON.stringify(this.puzzleArray));
+		sessionStorage.setItem('puzzleArray', JSON.stringify(this.puzzleArray));
+		sessionStorage.setItem('puzzleSize', Puzzle.puzzleSize);
+		this.drawPuzzle();
 	}
+
 }
 
-document.body.innerHTML = `<div class="wrapper>
-<div class="btn__container">
-	<button></button>
-	<button></button>
-	<button></button>
-	<button></button>
+document.body.innerHTML
++= `<div class="wrapper">
+	<div class="btn__container">
+		<button class='btn__container-result'>Results</button>
+		<button class='btn__container-restart'>Restart</button>
+		<button class='btn__container-stop'>Stop</button>
+	</div>
+	<div class='result'><span>Records</span></div>
+	 <span class='congratulation'>CONGRATULATION</span>
+	<div class="info_container">
+		<span class="info_container-step">Step: 0</span>
+		<span class="info_container-time">Time: 00:00</span>
+	</div>
+	<div class="puzzle"></div>
+	<div class="puzzle__size">
+		<button value="3">3x3</button>
+		<button value="4">4x4</button>
+		<button value="5">5x5</button>
+		<button value="6">6x6</button>
+		<button value="7">7x7</button>
+		<button value="8">8x8</button>
+	</div>
 </div>
-<div class="info">
-	<span>Ходов:</span>
-	<span>Время: 10:10</span>
-</div>
-<div class="puzzle"></div>
-</div>`
+`;
 
-Puzzle.createPuzzle()
+Puzzle.createPuzzle();
+
