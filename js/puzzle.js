@@ -52,7 +52,33 @@ export default class Puzzle {
 		}
 	}
 
-	
+	static endGame() {
+		for (let i = 0; i < this.finalArray.length; i++) {
+			if (this.finalArray[i] !== this.puzzleArray[i]) {
+				return false;
+			}
+		}
+		Info.stopTimer();
+		document.querySelector('.congratulation').style.display = 'block';
+		this.results.push({
+			time: document.querySelector('.info_container-time').innerHTML,
+			steps: document.querySelector('.info_container-step').innerHTML,
+			size: this.puzzleSize,
+		});
+		this.saveResult();
+		sessionStorage.setItem('results', JSON.stringify(this.results));
+		return true;
+	}
+
+	static saveResult() {
+		const savedResults = 10;
+		const data = this.results[this.results.length - 1];
+		document.querySelector('.result').innerHTML += `<span>${data.size}x${data.size} // ${data.steps} // ${data.time}</span>`;
+		if (this.results.length - 1 > savedResults) {
+			this.results.shift();
+			document.querySelector('.result').firstChild.remove();
+		}
+	}
 }
 
 document.body.innerHTML
@@ -82,3 +108,31 @@ document.body.innerHTML
 
 Puzzle.createPuzzle();
 
+const buttons = document.querySelectorAll('.puzzle__size > button');
+buttons.forEach((btn) => {
+	btn.addEventListener('click', (event) => {
+		Puzzle.puzzleSize = event.target.value;
+		Puzzle.newPuzzle();
+		Info.clearInfo();
+	});
+});
+
+document.querySelector('.btn__container-restart').addEventListener('click', () => {
+	Puzzle.puzzleArray = JSON.parse(sessionStorage.getItem('originalArray'));
+	Puzzle.drawPuzzle();
+	Info.clearInfo();
+});
+
+document.querySelector('.congratulation').addEventListener('click', (event) => {
+	event.target.style.display = 'none';
+});
+
+document.querySelector('.btn__container-stop').addEventListener('click', () => Info.stopTimer());
+
+document.querySelector('.btn__container-result').addEventListener('click', () => {
+	document.querySelector('.result').style.display = 'flex';
+});
+
+document.querySelector('.result').addEventListener('click', (event) => {
+	event.target.closest('.result').style.display = 'none';
+});
