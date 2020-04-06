@@ -1,4 +1,5 @@
 import Puzzle from './puzzle.js';
+import Info from './game_info.js';
 
 class Gems {
 	static gem;
