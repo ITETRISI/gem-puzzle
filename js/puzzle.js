@@ -59,12 +59,13 @@ export default class Puzzle {
 			}
 		}
 		Info.stopTimer();
-		document.querySelector('.congratulation').style.display = 'block';
 		this.results.push({
 			time: document.querySelector('.info_container-time').innerHTML,
 			steps: document.querySelector('.info_container-step').innerHTML,
 			size: this.puzzleSize,
 		});
+		document.querySelector('.congratulation').style.display = 'flex';
+		document.querySelector('.congratulation').innerHTML = `Ура! Вы решили головоломку за ${this.results[this.results.length - 1].time} и ${this.results[this.results.length - 1].steps}`;
 		this.saveResult();
 		sessionStorage.setItem('results', JSON.stringify(this.results));
 		return true;
@@ -89,9 +90,9 @@ document.body.innerHTML
 		<button class='btn__container-stop'>Stop</button>
 	</div>
 	<div class='result'><span>Records</span></div>
-	 <span class='congratulation'>CONGRATULATION</span>
+	 <span class='congratulation'></span>
 	<div class="info_container">
-		<span class="info_container-step">Step: 0</span>
+		<span class="info_container-step">Steps: 0</span>
 		<span class="info_container-time">Time: 00:00</span>
 	</div>
 	<div class="puzzle"></div>
