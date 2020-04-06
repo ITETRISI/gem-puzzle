@@ -41,6 +41,18 @@ export default class Puzzle {
 		this.drawPuzzle();
 	}
 
+	static drawPuzzle() {
+		document.querySelector('.puzzle').innerHTML = '';
+		for (let i = 0; i < this.puzzleSize; i++) {
+			document.querySelector('.puzzle').innerHTML += '<div class="puzzle__row"></div>';
+			for (let j = 0; j < this.puzzleSize; j++) {
+				const gem = this.puzzleArray[j + this.puzzleSize * i];
+				document.querySelector('.puzzle').lastChild.innerHTML += `<div id="gem-${gem}" class='gem' draggable="true">${gem}</div>`;
+			}
+		}
+	}
+
+	
 }
 
 document.body.innerHTML
